@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Curvature-Based Marine Path Following | Research Playground</title>
+  <meta name="description" content="Interactive replay of published curvature-based marine path-following simulation results.">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header><div class="brand"><span class="mark">◇</span><div><small>MARINE AUTONOMY / RESEARCH PLAYGROUND</small><h1>CURVATURE <em>PATH FOLLOWING</em></h1></div></div><span class="pill">DATA-DRIVEN REPLAY</span></header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="section-id">01 / SIMULATION STUDY</div><h2>Experiment setup</h2>
+      <p class="muted">Explore original CSV outputs from the supplied Python research package. Results are replayed, not recomputed.</p>
+      <label for="study">Recorded experiment</label>
+      <select id="study"><option value="preview">Curvature-Based Path Following</option><option value="ship">Ship-model curvature tracking</option><option value="waypoint">Waypoint curvature tracking</option></select>
+      <div class="notice" id="studyInfo">Loading supplied study…</div>
+      <h3>Playback controls</h3>
+      <label for="speed">Playback speed <b id="speedValue">1×</b></label>
+      <input id="speed" type="range" min="1" max="20" step="1" value="1">
+      <div class="actions"><button id="play">▶ Play</button><button id="reset" class="secondary">↺ Reset</button></div>
+      <label for="seek">Progress <b id="progressLabel">0%</b></label><input id="seek" type="range" min="0" max="100" step="1" value="0">
+      <h3>Displayed trajectories</h3>
+      <label class="check"><input type="checkbox" id="trace" checked> Show travelled trace</label>
+      <label class="check"><input type="checkbox" id="waypoints" checked> Show nominal waypoints (WP1–WP4)</label>
+      <label class="check"><input type="checkbox" id="compare"> Overlay other available runs</label>
+      <label class="check"><input type="checkbox" id="follow" checked> Follow ship</label>
+      <div class="notice subtle">The original Python model, capture algorithm and control law are not shipped to this website. Changing playback settings does not change the physical scenario.</div>
+    </aside>
+    <main>
+      <div class="heading"><div><div class="section-id">02 / TRAJECTORY VIEWER</div><h2>Curvature-Based Path Following <span id="studyTitle">/ Curvature preview</span></h2></div><span class="live" id="status">● Preparing data</span></div>
+      <section class="panel map-panel"><div class="panel-heading"><strong>Plan view · X–Y [m]</strong><div class="legend"><span><i class="line cyan"></i>Travelled vessel path</span><span><i class="line purple"></i>Other experiment so far</span><span><i class="dot"></i>Nominal WPs</span><span>▲ Vessel heading</span></div></div><canvas id="map"></canvas><div class="map-foot"><span id="mapBounds">Metric coordinates</span><button id="fit" class="mini">Fit map</button></div></section>
+      <div class="metrics"><div><small>TRAVELLED DISTANCE</small><strong id="distance">—</strong></div><div><small>CROSS-TRACK ERROR</small><strong id="error">—</strong></div><div><small>HEADING ERROR</small><strong id="heading">—</strong></div><div><small>VESSEL SPEED</small><strong id="vesselSpeed">—</strong></div></div>
+      <div class="charts"><section class="panel"><div class="panel-heading"><strong>Cross-track error</strong><small>eᵧ [m]</small></div><canvas id="errorChart"></canvas></section><section class="panel"><div class="panel-heading"><strong>Curvature · command / actual / reference</strong><small>κ [1/m]</small></div><canvas id="curvatureChart"></canvas></section><section class="panel"><div class="panel-heading"><strong>Heading error</strong><small>eχ [deg]</small></div><canvas id="headingChart"></canvas></section><section class="panel"><div class="panel-heading"><strong>Rudder command</strong><small>δ [deg]</small></div><canvas id="rudderChart"></canvas></section></div>
+      <footer>Source: supplied standalone_model_capture_v0_11 Python simulation outputs · Reproducible data replay · No claim of independent model validation</footer>
+    </main>
+  </div>
+  <script src="./recorded-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
